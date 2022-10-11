@@ -9,7 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 Class HelloPage extends AbstractController
 {
-    #[Route('/hello', name: 'hello',)]
+    #[Route('/hell', name: 'hello',)]
     public function welcome(): Response
     {
         $message = 'hi';
