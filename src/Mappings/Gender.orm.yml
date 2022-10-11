@@ -1,0 +1,14 @@
+src\Entity\Gender:
+ type: entity
+ repositoryClass: src\Repository\GenderRepository
+ table: gender
+ schema: users_records
+ id: 
+  id:
+    type: integer
+    generator:
+      strategy: AUTO 
+ fields:
+  gender:
+    type: text
+    length: 50

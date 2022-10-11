@@ -1,0 +1,13 @@
+src\Entity\BloodGroup:
+ type: entity
+ repositoryClass: src\Repository\BloodGroupRepository
+ table: blood_group
+ id: 
+  id:
+    type: integer
+    generator:
+      strategy: AUTO 
+ fields:
+  bloodGroup:
+    type: text
+    length: 50

@@ -1,0 +1,34 @@
+src\Entity\User:
+ type: entity
+ repositoryClass: src\Repository\UserRepository
+ table: user
+ id: 
+  id:
+    type: integer
+    generator:
+      strategy: AUTO 
+ fields:
+  firstName:
+    type: text
+    length: 50
+  lastName:
+    type: text
+    length: 50
+oneToOne:
+  bloodGroupId:
+    targetEntity: blood_group
+    joinColumn:
+      name: blood_group_id
+      referencedColumnName: id
+      onDelete: CASCADE
+  genderId:
+    targetEntity: gender
+    joinColumn:
+      name: gender_id
+      referencedColumnName: id
+      onDelete: CASCADE
+oneToMany:
+  phoneNumber:
+    targetEntity: phone_number
+    mappedBy: id
+    cascade: ["persist", "merge"]

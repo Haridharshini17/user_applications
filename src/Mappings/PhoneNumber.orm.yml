@@ -1,0 +1,14 @@
+src\Entity\PhoneNumber:
+ type: entity
+ repositoryClass: src\Repository\PhoneNumberRepository
+ table: phone_number
+ schema: users_records
+ id: 
+  id:
+    type: integer
+    generator:
+      strategy: AUTO 
+ fields:
+  phoneNumber:
+    type: integer
+    length: 50
