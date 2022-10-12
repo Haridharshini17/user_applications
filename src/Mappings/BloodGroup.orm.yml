@@ -10,5 +10,9 @@ App\Entity\BloodGroup:
  fields:
   bloodGroup:
     type: text
+ oneToOne:
+  user:
+    targetEntity: User
+    inversedBy: bloodGroup
 
 

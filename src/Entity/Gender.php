@@ -5,6 +5,8 @@ class Gender
 {
     private int $id;
 
+    private $user;
+    
     private string $gender;
     
     public function getId(): ?int

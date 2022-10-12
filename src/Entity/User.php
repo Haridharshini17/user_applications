@@ -12,11 +12,11 @@ class User
     private $lastName;
     private $bloodGroup;
     private $gender;
-    private $phoneNumber;
+    private $phoneNumbers;
 
     public function __construct()
     {
-        $this->phoneNumber = new ArrayCollection();
+        $this->phoneNumbers = new ArrayCollection();
     }
     public function getId()
     {
@@ -64,7 +64,7 @@ class User
         return $this->gender;
     }
 
-    public function setGenderId(gender $gender): self
+    public function setGender(gender $gender): self
     {
         $this->gender = $gender;
 
@@ -72,20 +72,27 @@ class User
     }
     public function getPhoneNumber(): Collection
     {
-        return $this->phoneNumber;
+        return $this->phoneNumbers;
     }
-    public function addPhoneNumber(phoneNumber $phoneNumber): void
+    public function addPhoneNumber(phoneNumber $phoneNumber): self
     {
-        if(!$this->phoneNumber->contains($phoneNumber))
+        if(!$this->phoneNumbers->contains($phoneNumber))
         {
-            $this->phoneNumber->add($phoneNumber);
+            $this->phoneNumbers[] = $phoneNumber;
+            $phoneNumber->setUser($this);
         }
+        return $this;
     }
-    public function removePhoneNumber(phoneNumber $phoneNumber): void
+    public function removePhoneNumber(phoneNumber $phoneNumber): self
     {
-        if(!$this->phoneNumber->contains($phoneNumber))
+        if(!$this->phoneNumbers->contains($phoneNumber))
         {
-            $this->phoneNumber->remove($phoneNumber);
+            $this->phoneNumbers->removeElement($phoneNumber);
         }
+        if ($phoneNumber->getUser() === $this) 
+        {
+            $phoneNumber->setUser(null);
+        }
+        return $this;
 }
 }

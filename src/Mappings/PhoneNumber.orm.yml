@@ -11,8 +11,9 @@ App\Entity\PhoneNumber:
   phoneNumber:
     type: integer
     length: 50
- manytoOne:
-  userId:
+ manyToOne:
+  user:
     targetEntity: User
-    inversedBy: phoneNumber
-  
+    inversedBy: phoneNumbers
+    joinColumn:
+      nullable: false

@@ -14,7 +14,7 @@ App\Entity\User:
   lastName:
     type: text
     length: 50
- oneToOne:
+ oneToOne: 
   bloodGroup:
     targetEntity: bloodgroup
     joinColumn:
@@ -28,7 +28,7 @@ App\Entity\User:
       referencedColumnName: id
       onDelete: CASCADE
  oneToMany:
-  phoneNumber:
+  phoneNumbers:
     targetEntity: PhoneNumber
-    mappedBy: userId
+    mappedBy: user
  

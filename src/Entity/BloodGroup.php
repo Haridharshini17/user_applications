@@ -2,9 +2,11 @@
 namespace App\Entity;
 class BloodGroup
 {
-    private ?int $id = null;
+    private int $id;
 
-    private ?string $bloodGroup = null;
+    private int $user;
+    
+    private string $bloodGroup;
 
     public function getId(): ?int
     {
