@@ -2,21 +2,24 @@
 namespace App\Entity;
 class BloodGroup
 {
-    private $id;
-    private $bloodGroup;
-    
+    private ?int $id = null;
 
-public function getId(): int
-{
-    return $this->id;
-}
-public function getBloodGroup()
-{
-    return $this->bloodGroup;
-}
-public function setBloodGroup(string $bloodGroup): self
-{
-    $this->bloodGroup = $bloodGroup;
-    return $this;
-}
+    private ?string $bloodGroup = null;
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getBloodGroup(): ?string
+    {
+        return $this->bloodGroup;
+    }
+
+    public function setBloodGroup(string $bloodGroup): self
+    {
+        $this->bloodGroup = $bloodGroup;
+
+        return $this;
+    }
 }

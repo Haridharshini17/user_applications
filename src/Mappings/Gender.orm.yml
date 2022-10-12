@@ -1,8 +1,7 @@
-src\Entity\Gender:
+App\Entity\Gender:
  type: entity
  repositoryClass: src\Repository\GenderRepository
  table: gender
- schema: users_records
  id: 
   id:
     type: integer

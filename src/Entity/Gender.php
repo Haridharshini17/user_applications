@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Entity;
 
 class Gender
@@ -22,3 +21,4 @@ class Gender
         return $this;
     }
 }
+?>

@@ -1,4 +1,4 @@
-src\Entity\User:
+App\Entity\User:
  type: entity
  repositoryClass: src\Repository\UserRepository
  table: user
@@ -14,21 +14,21 @@ src\Entity\User:
   lastName:
     type: text
     length: 50
-oneToOne:
-  bloodGroupId:
-    targetEntity: blood_group
+ oneToOne:
+  bloodGroup:
+    targetEntity: bloodgroup
     joinColumn:
       name: blood_group_id
       referencedColumnName: id
       onDelete: CASCADE
-  genderId:
+  gender:
     targetEntity: gender
     joinColumn:
       name: gender_id
       referencedColumnName: id
       onDelete: CASCADE
-oneToMany:
+ oneToMany:
   phoneNumber:
-    targetEntity: phone_number
-    mappedBy: id
-    cascade: ["persist", "merge"]
+    targetEntity: PhoneNumber
+    mappedBy: userId
+ 

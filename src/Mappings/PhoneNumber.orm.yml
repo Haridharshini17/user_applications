@@ -1,8 +1,7 @@
-src\Entity\PhoneNumber:
+App\Entity\PhoneNumber:
  type: entity
  repositoryClass: src\Repository\PhoneNumberRepository
- table: phone_number
- schema: users_records
+ table: phonenumber
  id: 
   id:
     type: integer
@@ -12,3 +11,8 @@ src\Entity\PhoneNumber:
   phoneNumber:
     type: integer
     length: 50
+ manytoOne:
+  userId:
+    targetEntity: User
+    inversedBy: phoneNumber
+  

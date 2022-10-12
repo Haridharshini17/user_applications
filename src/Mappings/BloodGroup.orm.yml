@@ -1,7 +1,7 @@
-src\Entity\BloodGroup:
+App\Entity\BloodGroup:
  type: entity
  repositoryClass: src\Repository\BloodGroupRepository
- table: blood_group
+ table: bloodgroup
  id: 
   id:
     type: integer
@@ -10,4 +10,5 @@ src\Entity\BloodGroup:
  fields:
   bloodGroup:
     type: text
-    length: 50
+
+

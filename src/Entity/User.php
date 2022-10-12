@@ -1,16 +1,23 @@
 <?php
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+
 class User
 {
 
     private $id;
     private $firstName;
     private $lastName;
-    private $bloodGroupId;
-    private $genderId;
+    private $bloodGroup;
+    private $gender;
     private $phoneNumber;
 
+    public function __construct()
+    {
+        $this->phoneNumber = new ArrayCollection();
+    }
     public function getId()
     {
         return $this->id;
@@ -40,38 +47,45 @@ class User
         return $this;
     }
 
-    public function getBloodGroupId(): ?bloodgroup
+    public function getBloodGroup()
     {
-        return $this->bloodGroupId;
+        return $this->bloodGroup;
     }
 
-    public function setBloodGroupId(bloodgroup $id): self
+    public function setBloodGroup(bloodgroup $bloodGroup): self
     {
-        $this->bloodGroupId = $id;
+        $this->bloodGroup = $bloodGroup;
 
         return $this;
     }
 
-    public function getGenderId(): ?gender
+    public function getGender()
     {
-        return $this->genderId;
+        return $this->gender;
     }
 
-    public function setGenderId(gender $genderId): self
+    public function setGenderId(gender $gender): self
     {
-        $this->genderId = $genderId;
+        $this->gender = $gender;
 
         return $this;
     }
-    public function getPhoneNumber(): ?PhoneNumber
+    public function getPhoneNumber(): Collection
     {
         return $this->phoneNumber;
     }
-
-    public function setPhoneNumber(PhoneNumber $Id): self
+    public function addPhoneNumber(phoneNumber $phoneNumber): void
     {
-        $this->Id = $Id;
-
-        return $this;
+        if(!$this->phoneNumber->contains($phoneNumber))
+        {
+            $this->phoneNumber->add($phoneNumber);
+        }
     }
+    public function removePhoneNumber(phoneNumber $phoneNumber): void
+    {
+        if(!$this->phoneNumber->contains($phoneNumber))
+        {
+            $this->phoneNumber->remove($phoneNumber);
+        }
+}
 }
