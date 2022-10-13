@@ -17,18 +17,22 @@ App\Entity\User:
  oneToOne: 
   bloodGroup:
     targetEntity: bloodgroup
+    inversedBy: user
     joinColumn:
       name: blood_group_id
       referencedColumnName: id
       onDelete: CASCADE
+      onUpdate: CASCADE
   gender:
     targetEntity: gender
+    inversedBy: user
     joinColumn:
       name: gender_id
       referencedColumnName: id
       onDelete: CASCADE
+      onUpdate: CASCADE
  oneToMany:
   phoneNumbers:
     targetEntity: PhoneNumber
     mappedBy: user
- 
+  

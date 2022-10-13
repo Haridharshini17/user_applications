@@ -12,6 +12,6 @@ App\Entity\Gender:
     type: text
     length: 50
  oneToOne:
-  user: 
-    targetEntity: User
-    inversedBy: gender
+  user:
+   targetEntity: User
+   mappedBy: gender

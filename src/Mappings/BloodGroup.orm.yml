@@ -12,7 +12,5 @@ App\Entity\BloodGroup:
     type: text
  oneToOne:
   user:
-    targetEntity: User
-    inversedBy: bloodGroup
-
-
+   targetEntity: User
+   mappedBy: bloodgroup
