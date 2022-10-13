@@ -13,12 +13,12 @@ class BloodGroup
         return $this->id;
     }
 
-    public function getBloodGroup(): ?string
+    public function getBloodGroup()
     {
         return $this->bloodGroup;
     }
 
-    public function setBloodGroup(string $bloodGroup): self
+    public function setBloodGroup($bloodGroup): self
     {
         $this->bloodGroup = $bloodGroup;
 

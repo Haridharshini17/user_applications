@@ -12,7 +12,7 @@ Class HelloPage extends AbstractController
     #[Route('/hello', name: 'hello',)]
     public function welcome(): Response
     {
-        $message = 'hi';
+        $message = 'hi lamp';
         return new response($message);
     }
 }
