@@ -4,7 +4,7 @@ class BloodGroup
 {
     private int $id;
 
-    private int $user;
+    private $user = null;
     
     private string $bloodGroup;
 

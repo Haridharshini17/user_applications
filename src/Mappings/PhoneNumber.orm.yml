@@ -1,6 +1,6 @@
 App\Entity\PhoneNumber:
  type: entity
- repositoryClass: src\Repository\PhoneNumberRepository
+ repositoryClass: App\Repository\PhoneNumberRepository
  table: phonenumber
  id: 
   id:

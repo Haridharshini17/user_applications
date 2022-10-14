@@ -1,6 +1,6 @@
 App\Entity\Gender:
  type: entity
- repositoryClass: src\Repository\GenderRepository
+ repositoryClass: App\Repository\GenderRepository
  table: gender
  id: 
   id:
@@ -15,3 +15,4 @@ App\Entity\Gender:
   user:
    targetEntity: User
    mappedBy: gender
+   unique: false

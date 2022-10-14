@@ -1,6 +1,6 @@
 App\Entity\User:
  type: entity
- repositoryClass: src\Repository\UserRepository
+ repositoryClass: App\Repository\UserRepository
  table: user
  id: 
   id:
@@ -16,7 +16,7 @@ App\Entity\User:
     length: 50
  oneToOne: 
   bloodGroup:
-    targetEntity: bloodgroup
+    targetEntity: bloodGroup
     inversedBy: user
     joinColumn:
       name: blood_group_id

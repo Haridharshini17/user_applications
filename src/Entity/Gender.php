@@ -5,7 +5,7 @@ class Gender
 {
     private int $id;
 
-    private $user;
+    private $user = null;
     
     private string $gender;
     

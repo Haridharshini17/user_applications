@@ -7,7 +7,6 @@ use Symfony\component\Routing\Annotation\Route;
 use Symfony\component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\User;
-use App\Entity\PhoneNumber;
 use App\Form\Type\UserRecordsForm;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -28,6 +27,7 @@ class UserRecords extends AbstractController
       return $this->renderForm('userForm/new.html.twig',
       [
         'formcreated' => $formcreated,
+
       ]);
     }
 }

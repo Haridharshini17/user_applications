@@ -1,16 +1,16 @@
 App\Entity\BloodGroup:
  type: entity
- repositoryClass: src\Repository\BloodGroupRepository
+ repositoryClass: App\Repository\BloodGroupRepository
  table: bloodgroup
  id: 
   id:
     type: integer
     generator:
-      strategy: AUTO 
+      strategy: AUTO
  fields:
   bloodGroup:
     type: text
  oneToOne:
   user:
    targetEntity: User
-   mappedBy: bloodgroup
+   mappedBy: bloodGroup
