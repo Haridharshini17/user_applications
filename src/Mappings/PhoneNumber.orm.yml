@@ -12,8 +12,10 @@ App\Entity\PhoneNumber:
     type: integer
     length: 50
  manyToOne:
-  user:
+  users:
     targetEntity: User
     inversedBy: phoneNumbers
+    cascade: ["persist"]
     joinColumn:
       nullable: false
+    

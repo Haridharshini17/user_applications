@@ -6,7 +6,7 @@ class PhoneNumber
 
     private int $id;
 
-    private $user;
+    private $users;
 
     private int $phoneNumber;
 
@@ -16,12 +16,12 @@ class PhoneNumber
     }
     public function getUser(): ?User
     {
-        return $this->user;
+        return $this->users;
     }
 
-    public function setUser(?User $user): self
+    public function setUser(?User $users): self
     {
-        $this->user = $user;
+        $this->users = $users;
 
         return $this;
     }

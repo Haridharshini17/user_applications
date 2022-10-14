@@ -35,4 +35,5 @@ App\Entity\User:
   phoneNumbers:
     targetEntity: PhoneNumber
     mappedBy: user
+    cascade: ["persist"]
   

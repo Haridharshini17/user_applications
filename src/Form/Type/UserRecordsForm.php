@@ -4,9 +4,13 @@ namespace App\Form\Type;
 use App\Entity\BloodGroup;
 use App\Entity\User;
 use App\Entity\Gender;
+use App\Entity\PhoneNumber;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use App\Type\Form\PhoneNumberForm;
 use App\Repository\BloodGroupRepository;
 use App\Repository\GenderRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -34,7 +38,10 @@ class UserRecordsForm extends AbstractType
                 return $repo->createQueryBuilder('g');
             }
         ))
-        
+        ->add('phoneNumber', CollectionType::class, [
+            'entry_type' => PhoneNumberForm::class,
+            'entry_options' => ['label' => false],
+        ])
         ->add('Save', SubmitType::class);
     }
     public function setDefaultOptions(OptionsResolver $resolver): void
