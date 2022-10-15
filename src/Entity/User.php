@@ -51,7 +51,6 @@ class User
     {
         return $this->bloodGroup;
     }
-
     public function setBloodGroup(bloodgroup $bloodGroup): self
     {
         $this->bloodGroup = $bloodGroup;
@@ -70,9 +69,14 @@ class User
 
         return $this;
     }
+    
     public function getPhoneNumber(): Collection
     {
         return $this->phoneNumbers;
+    }
+    public function __toString()
+    {  
+       return (string) $this->getPhoneNumber();
     }
     public function addPhoneNumber(phoneNumber $phoneNumber): self
     {
@@ -83,6 +87,7 @@ class User
         }
         return $this;
     }
+    
     public function removePhoneNumber(phoneNumber $phoneNumber): self
     {
         if(!$this->phoneNumbers->contains($phoneNumber))
