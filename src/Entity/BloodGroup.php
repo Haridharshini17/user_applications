@@ -17,7 +17,10 @@ class BloodGroup
     {
         return $this->bloodGroup;
     }
-
+    public function __toString()
+    {  
+       return (string) $this->getBloodGroup();
+    }
     public function setBloodGroup($bloodGroup): self
     {
         $this->bloodGroup = $bloodGroup;

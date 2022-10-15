@@ -1,7 +1,8 @@
 <?php
-namespace App\Type\Form;
+namespace App\Form\Type;
 
 use App\Entity\PhoneNumber;
+use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;

@@ -29,11 +29,15 @@ class PhoneNumber
     {
         return $this->phoneNumber;
     }
-
+    public function __toString()
+    {  
+       return strval($this->getPhoneNumber());
+    }
     public function setPhoneNumber(int $phoneNumber): self
     {
         $this->phoneNumber = $phoneNumber;
 
         return $this;
     }
+
 }

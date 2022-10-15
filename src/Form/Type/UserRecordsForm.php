@@ -5,8 +5,8 @@ use App\Entity\BloodGroup;
 use App\Entity\User;
 use App\Entity\Gender;
 use App\Entity\PhoneNumber;
+use App\Form\Type\PhoneNumberForm;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-use App\Type\Form\PhoneNumberForm;
 use App\Repository\BloodGroupRepository;
 use App\Repository\GenderRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -39,8 +39,9 @@ class UserRecordsForm extends AbstractType
             }
         ))
         ->add('phoneNumber', CollectionType::class, [
+            'label' => false,
             'entry_type' => PhoneNumberForm::class,
-            'entry_options' => ['label' => false],
+            'entry_options' => array('label' => false)            
         ])
         ->add('Save', SubmitType::class);
     }
