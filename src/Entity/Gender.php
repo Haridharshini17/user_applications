@@ -19,7 +19,7 @@ class Gender
     }
     public function __toString()
     {  
-       return (string) $this->getGender();
+       return $this->getGender();
     }
     public function setGender(string $gender): self
     {

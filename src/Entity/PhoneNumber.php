@@ -10,6 +10,8 @@ class PhoneNumber
 
     private int $phoneNumber;
 
+    private $createdAt;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -25,19 +27,27 @@ class PhoneNumber
 
         return $this;
     }
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
     public function getPhoneNumber(): ?int
     {
         return $this->phoneNumber;
     }
     public function __toString()
     {  
-       return strval($this->getPhoneNumber());
+        return strval($this->getPhoneNumber());
     }
     public function setPhoneNumber(int $phoneNumber): self
     {
         $this->phoneNumber = $phoneNumber;
 
         return $this;
+    }
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
     }
 
 }

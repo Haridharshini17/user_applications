@@ -13,6 +13,7 @@ class User
     private $bloodGroup;
     private $gender;
     private $phoneNumbers;
+    private $createdAt;
 
     public function __construct()
     {
@@ -45,6 +46,10 @@ class User
         $this->lastName = $lastName;
 
         return $this;
+    }
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
     }
 
     public function getBloodGroup()
@@ -99,5 +104,32 @@ class User
             $phoneNumber->setUser(null);
         }
         return $this;
-}
+    }
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+    }
+
+    public function __toArray()
+    {
+        return (string) [
+            'id' => $this->getId(),
+            'firstName' => $this->getFirstName(),
+            'lastName' => $this->getLastName(),
+            'bloodGroup' => $this->getBloodGroup(),
+            'gender' => $this->getGender(),
+            'phoneNumber' => $this->getPhoneNumber(),
+        ];
+    }
+//     public function serialize()
+//    {
+//        return serialize([
+//         $this->id,
+//         $this->firstName,
+//         $this->lastName,
+//         $this->bloodGroup,
+//         $this->gender,
+//         $this->phoneNumber,
+//     ]);
+//    }
 }
