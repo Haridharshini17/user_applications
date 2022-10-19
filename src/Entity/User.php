@@ -8,12 +8,13 @@ class User
 {
 
     private $id;
-    private $firstName;
-    private $lastName;
-    private $bloodGroup;
-    private $gender;
-    private $phoneNumbers;
-    private $createdAt;
+    public $firstName;
+    public $lastName;
+    public $bloodGroup;
+    public $gender;
+    public $phoneNumbers;
+    public $created_at;
+    public $updated_at;
 
     public function __construct()
     {
@@ -47,10 +48,6 @@ class User
 
         return $this;
     }
-    public function getCreatedAt()
-    {
-        return $this->createdAt;
-    }
 
     public function getBloodGroup()
     {
@@ -74,15 +71,19 @@ class User
 
         return $this;
     }
+    // public function __toString()
+    // {
+    //     return $this->gender;
+    // }
     
-    public function getPhoneNumber(): Collection
+    public function getPhoneNumbers(): Collection
     {
         return $this->phoneNumbers;
     }
-    public function __toString()
-    {  
-       return (string) $this->getPhoneNumber();
-    }
+    // public function __toString()
+    // {
+    //     return (string) $this->phoneNumbers;
+    // }
     public function addPhoneNumber(phoneNumber $phoneNumber): self
     {
         if(!$this->phoneNumbers->contains($phoneNumber))
@@ -105,22 +106,41 @@ class User
         }
         return $this;
     }
-    public function setCreatedAt($createdAt)
+    public function getCreatedAt(): ?\DateTimeInterface
     {
-        $this->createdAt = $createdAt;
+        return $this->created_at;
+    }
+ 
+    public function setCreatedAt(?\DateTimeInterface $created_at): self
+    {
+        $this->created_at = $created_at;
+ 
+        return $this;
+    }
+ 
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updated_at;
+    }
+ 
+    public function setUpdatedAt(?\DateTimeInterface $updated_at): self
+    {
+        $this->updated_at = $updated_at;
+ 
+        return $this;
     }
 
-    public function __toArray()
-    {
-        return (string) [
-            'id' => $this->getId(),
-            'firstName' => $this->getFirstName(),
-            'lastName' => $this->getLastName(),
-            'bloodGroup' => $this->getBloodGroup(),
-            'gender' => $this->getGender(),
-            'phoneNumber' => $this->getPhoneNumber(),
-        ];
-    }
+    // public function __toArray()
+    // {
+    //     return (string) [
+    //         'id' => $this->getId(),
+    //         'firstName' => $this->getFirstName(),
+    //         'lastName' => $this->getLastName(),
+    //         'bloodGroup' => $this->getBloodGroup(),
+    //         'gender' => $this->getGender(),
+    //         'phoneNumber' => $this->getPhoneNumbers(),
+    //     ];
+    // }
 //     public function serialize()
 //    {
 //        return serialize([

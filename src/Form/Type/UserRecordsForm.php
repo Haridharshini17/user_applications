@@ -7,67 +7,68 @@ use App\Entity\Gender;
 use App\Entity\PhoneNumber;
 use App\Form\Type\PhoneNumberForm;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\DataTransformerInterface;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use App\Repository\BloodGroupRepository;
 use App\Repository\GenderRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use App\Form\Type\BloodGroupTransformer;
 use App\Form\Type\GenderTransformer;
+use App\Form\Type\PhoneNumberTransformer;
+use DeepCopy\Filter\Filter;
+use Doctrine\DBAL\Types\StringType;
 use Doctrine\ORM\Mapping\OrderBy;
+use PhpParser\ErrorHandler\Collecting;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use symfony\component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Collection;
+use Twig\Node\BlockNode;
 
 class UserRecordsForm extends AbstractType
 {
     private $transformer;
-    public function __construct(BloodGroupTransformer $bloodGroupTransformer)
+    private $transformer1;
+   // private $transformer2;
+    public function __construct(BloodGroupTransformer $bloodGroupTransformer, GenderTransformer $genderTransformer)
     {
         $this->transformer = $bloodGroupTransformer;
+        $this->transformer1 = $genderTransformer;
+        // $this->transformer2 = $phoneNumberTransformer;
     }
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+        ->add('id', IntegerType::class)
         ->add('firstName', TextType::class)
         ->add('lastName', TextType::class)
-        ->add('bloodGroup',EntityType::class, array(
-            'class' => BloodGroup::class,
-            'choice_label' => 'bloodGroup',
-            'choice_filter' => 'isSelectable',
-            'query_builder' => function(BloodGroupRepository $repo) {
-               return $repo->createQueryBuilder('b');
-           },
-            // 'choice_filter' => 'isSelectable',
-        ))
-        ->add('gender',EntityType::class, array(
-            'class' => Gender::class,
-            'choice_label' => 'gender',
-            'choice_filter' => 'isSelectable',
-            'query_builder' => function(GenderRepository $repo) {
-                return $repo->createQueryBuilder('g');
-            }
-        ))
-        ->add('phoneNumber', CollectionType::class, [
-            'label' => false,
-            'entry_type' => PhoneNumberForm::class,
-            'entry_options' => array('label' => false)            
+        ->add('bloodGroup',TextType::class)
+        ->add('gender',TextType::class)
+        ->add('phoneNumbers', CollectionType::class, [
+            'entry_type' => PhoneNumberForm::class,   
+            'entry_options' => ['label' => false],
+            'allow_add' => true, 
+            'by_reference' => false,
+            'prototype'=> true
         ])
-         ->getForm()
-         
+        ->getForm()
         ->add('Save', SubmitType::class);
         $builder->get('bloodGroup')
             ->addModelTransformer($this->transformer);
         $builder->get('gender')
-            ->addModelTransformer($this->transformer);
+            ->addModelTransformer($this->transformer1);
+        // $builder->get('phoneNumber')
+        //     ->addModelTransformer($this->transformer2);
      }
     public function setDefaultOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults(array(
-            'data_class' => null,
-             'allow_extra_fields' => true
-            // 'data_class' => BloodGroup::class,
-            // 'data_class' => Gender::class
+            'data_class' => User::class,
+            'allow_extra_fields' => true
         ));
     }
     public function getDefaultOptions(array $options)

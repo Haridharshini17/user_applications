@@ -2,6 +2,7 @@
 namespace App\Form\Type;
 use App\Entity\User;
 use App\Entity\BloodGroup;
+use App\Repository\BloodGroupRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\TransformationFailedException;
@@ -17,28 +18,25 @@ Class BloodGroupTransformer implements DataTransformerInterface
 
     public function transform($bloodGroup): string
     {
-    
         if (null === $bloodGroup) {
             return "";
         }
-        return $bloodGroup->getbloodgroup();
+        return $bloodGroup->getBloodGroup();
     }
-    public function reverseTransform($Id): ?BloodGroup
+    public function reverseTransform($bloodGroup): ?BloodGroup
     {
-        
-        if (!$Id) {
+        if(!$bloodGroup) {
             return null;
         }
 
         $bloodGroup = $this->entityManager
             ->getRepository(BloodGroup::class)
-            ->find($Id)
+            ->find($bloodGroup)
         ;
 
         if (null === $bloodGroup) {
             throw new TransformationFailedException(sprintf(
-                'An blood group "%s" does not exist!',
-                $Id
+                'An Bloodgroup "%s" does not exist!',$bloodGroup
             ));
         }
 

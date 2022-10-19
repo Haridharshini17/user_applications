@@ -14,6 +14,10 @@ use App\Form\Type\UserRecordsForm;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
+use phpDocumentor\Reflection\DocBlock\Serializer as DocBlockSerializer;
+use Symfony\Bridge\Doctrine\ManagerRegistry as DoctrineManagerRegistry;
+use Symfony\Component\Messenger\Transport\Serialization\Serializer as SerializationSerializer;
+use Symfony\Component\Messenger\Transport\Serialization\SerializerInterface;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
@@ -26,63 +30,48 @@ class UserRecords extends AbstractController
      {
         $user = new User;
         $phone = new PhoneNumber;
-        $user->addPhoneNumber($phone);
+        $phone = $user->addPhoneNumber($phone);
         $formcreated = $this->createForm(UserRecordsForm::class, $user);
         $formcreated->handleRequest($request);
+       // $user = $formcreated->getData();
         $formcreated->submit(json_decode($request->getContent(), true));
         if($formcreated->isSubmitted() && $formcreated->isValid())
         {
-           $user = $formcreated->getData();
+            $user = $formcreated->getData();
             $entityManager = $doctrine->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
             return new Response(Response::HTTP_CREATED);
         }
-       // dd($formcreated->getErrors());
-        return new Response(Response::HTTP_ACCEPTED);
-        
+        dd($formcreated->getErrors());
+        return new Response(Response::HTTP_ACCEPTED);  
      }
-     #[Route('/records/{id}', name: 'records_shows', methods: ['PUT'])]
+     #[Route('/record/{id}', name: 'recordsn_shows', methods: ['PUT'])]
      public function show(ManagerRegistry $doctrine, $id): Response
      {
-         $record = $doctrine->getRepository(User::class)->find($id);
-         return new Response($record,Response::HTTP_FOUND);   
-     }  
-    #[Route('/userrecords' , name: 'userrecords', methods: ['POST'])]
-
-    public function postAction(Request $request, ManagerRegistry $doctrine,EntityManagerInterface $entityManager): Response
+        //$record = new User;
+        $entityManager = $doctrine->getManager();
+        $record = $entityManager->getRepository(User::class)->find($id);
+        return new Response($record, Response::HTTP_ACCEPTED);   
+     } 
+    #[Route('/records/{id}', name: 'records_shows_correct', methods: ['PUT'])]
+    public function display(ManagerRegistry $doctrine, $id, SerializerInterface $serializer): Response
     {
-      $data = new User;
-      $paramater = json_decode($request->getContent(), true);
-      $data->setFirstName('firstName');
-      $data->setLastName('lastName');
-      $data->setBloodGroup($paramater['BloodGroup']);
-      $data->setGender($paramater['gender']);
-      $data->addPhoneNumber($paramater['phoneNumber']);
-      $em = $doctrine->getManager();
-      $em->persist($data);
-      $em->flush();
-      return new Response("User Added Successfully", Response::HTTP_OK);
-    }
-    
-    #[Route('/records/{id}', name: 'records_shows', methods: ['PUT'])]
-    public function display(ManagerRegistry $doctrine, $id): Response
-    {
-        $datas = new User;
+        $record = new User;
         $phone = new PhoneNumber;
-        $datas->addPhoneNumber($phone);
-        $datas->setCreatedAt(new \DateTime('now'));
-       // $jsonContent = $serializer->serialize($datas, 'json');
-        $record = $doctrine->getRepository(User::class)->find($id);
-        $data =  [
-            'id' => $record->getId(),
-            'firstName' => $record->getFirstName(),
-            'lastName' => $record->getLastName(),
-            'bloodGroup' =>$record->getBloodGroup(),
-            'gender' => $record->getGender(),
-            'phoneNumber' => $record->getPhoneNumber(),
-        ];
-        return new Response(json_encode($data)); 
+       $record->addPhoneNumber($phone);
+        //$record->setCreatedAt(new \DateTime('now'));
+        $entityManager = $doctrine->getManager();
+        $record = $entityManager->getRepository(User::class)->find($id);
+        $datass =  [
+                 'id'=> $record->getId(),
+                 'FirstName'=>$record->getFirstName(),
+                 'LastName'=>$record->getLastName(),
+                 'BloodGroup'=>(string)$record->getBloodGroup(),
+                 'Gender'=>(string)$record->getGender(),
+                 'PhoneNumber'=>$record->getPhoneNumbers(),
+                ];
+        return $this->json($datass); 
     }
     #[Route('/record/delete/{id}', name: 'delete_record', methods: ['DELETE'])]
     public function delete(ManagerRegistry $doctrine, $id): Response
@@ -97,22 +86,37 @@ class UserRecords extends AbstractController
       $data->flush();
        return new Response(Response::HTTP_NO_CONTENT);
     }
-    #[Route('/record/update/{id}', name: 'update_record', methods: ['GET'])]
+    #[Route('/record/update/{id}', name: 'update_record', methods: ['PATCh'])]
     public function update(ManagerRegistry $doctrine ,$id, Request $request): Response
-    {
-             //$entityManager = $doctrine->getManager();
-             $data = $doctrine->getRepository(User::class)->find($id);
-            // $paramater = json_encode($request->getContent(), true);
-             $data->getFirstName('FirstName');
-             $data->getLastName(['lastName']);
-             $data->getBloodGroup(['bloodGroup']);
-             $data->getGender(['gender']);
-             $data->getPhoneNumber(['phoneNumber']);
-             $em = $doctrine->getManager();
-             $em->persist($data);
-             $em->flush();
+   {
+    
+             $entityManager = $doctrine->getManager();
+             $data = $entityManager->getRepository(User::class)->find($id);
+            //dd($data);
+            // $paramater = json_decode($request->getContent(), true);
+           // dd($paramater);
+            $data->setFirstName($data->firstName);
+            $data->setLastName($data->lastName);
+            $data->setBloodGroup($data->bloodGroup);
+            $data->setGender($data->gender);
+           // $data->addPhoneNumber($data->phoneNumbers);
+            $entityManager->flush();
+             $data =  [
+                'id' => $data->getId(),
+                'FirstName' => $data->getFirstName(),
+                'LastName' => $data->getlastName(),
+                'BloodGroup' => (string)$data->getBloodGroup(),
+                'Gender' => (string)$data->getGender(),
+               //'PhoneNumber' =>$data->getphoneNumbers()
+            ];
+              
+            return $this->json($data);
              return $this->json([
                'added successfully'
-            ]);    
-    }
+            ]);  
+   }
+           
+                  
+
+
 }

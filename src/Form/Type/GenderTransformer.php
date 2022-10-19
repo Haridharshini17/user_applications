@@ -21,24 +21,23 @@ Class GenderTransformer implements DataTransformerInterface
         if (null === $gender) {
             return "";
         }
-        return $gender->getId();
+        return $gender->getgender();
     }
-    public function reverseTransform($genderget): ?Gender
+    public function reverseTransform($gender): ?Gender
     {
         
-        if (!$genderget) {
+        if (!$gender) {
             return null;
         }
 
         $gender = $this->entityManager
             ->getRepository(Gender::class)
-            ->find($genderget)
+            ->find($gender)
         ;
 
         if (null === $gender) {
             throw new TransformationFailedException(sprintf(
-                'An blood group "%s" does not exist!',
-                $genderget
+                'An gender "%s" does not exist!',$gender
             ));
         }
 

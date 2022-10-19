@@ -3,12 +3,11 @@ namespace App\Entity;
 
 class PhoneNumber
 {
-
     private int $id;
 
     private $users;
 
-    private int $phoneNumber;
+    private  $phoneNumber;
 
     private $createdAt;
 
@@ -31,15 +30,15 @@ class PhoneNumber
     {
         return $this->createdAt;
     }
-    public function getPhoneNumber(): ?int
+    public function getPhoneNumber()
     {
         return $this->phoneNumber;
     }
-    public function __toString()
-    {  
-        return strval($this->getPhoneNumber());
-    }
-    public function setPhoneNumber(int $phoneNumber): self
+    // public function __toArray()
+    // {  
+    //     return (string) $this->getPhoneNumber();
+    // }
+    public function setPhoneNumber($phoneNumber): self
     {
         $this->phoneNumber = $phoneNumber;
 
