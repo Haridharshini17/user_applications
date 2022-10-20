@@ -46,21 +46,25 @@ class UserRecords extends AbstractController
         dd($formcreated->getErrors());
         return new Response(Response::HTTP_ACCEPTED);  
      }
-     #[Route('/record/{id}', name: 'recordsn_shows', methods: ['PUT'])]
-     public function show(ManagerRegistry $doctrine, $id): Response
-     {
-        //$record = new User;
-        $entityManager = $doctrine->getManager();
-        $record = $entityManager->getRepository(User::class)->find($id);
-        return new Response($record, Response::HTTP_ACCEPTED);   
-     } 
+     #[Route('/record/{id}', name: 'recordsn_shows', methods: ['GET'])]
+   //   public function show(ManagerRegistry $doctrine, $id,Request $request): Response
+   //   {
+
+   //          $entityManager = $doctrine->getManager();
+   //          $data = $entityManager->getRepository(User::class)->find($id);
+   //          $formcreated = $this->createForm(UserRecordsForm::class, $data);
+   //          return new Response($formcreated->getData());
+   //      //$record = new User;
+   //    //   $entityManager = $doctrine->getManager();
+   //    //   $record = $entityManager->getRepository(User::class)->find($id);
+   //    //   return new Response($record, Response::HTTP_ACCEPTED);   
+   //   } 
     #[Route('/records/{id}', name: 'records_shows_correct', methods: ['PUT'])]
     public function display(ManagerRegistry $doctrine, $id, SerializerInterface $serializer): Response
     {
         $record = new User;
         $phone = new PhoneNumber;
-       $record->addPhoneNumber($phone);
-        //$record->setCreatedAt(new \DateTime('now'));
+        $record->addPhoneNumber($phone);
         $entityManager = $doctrine->getManager();
         $record = $entityManager->getRepository(User::class)->find($id);
         $datass =  [
@@ -86,37 +90,26 @@ class UserRecords extends AbstractController
       $data->flush();
        return new Response(Response::HTTP_NO_CONTENT);
     }
-    #[Route('/record/update/{id}', name: 'update_record', methods: ['PATCh'])]
+    #[Route('/record/update/{id}', name: 'update_record', methods: ['PATCH'])]
     public function update(ManagerRegistry $doctrine ,$id, Request $request): Response
    {
-    
-             $entityManager = $doctrine->getManager();
-             $data = $entityManager->getRepository(User::class)->find($id);
-            //dd($data);
-            // $paramater = json_decode($request->getContent(), true);
-           // dd($paramater);
-            $data->setFirstName($data->firstName);
-            $data->setLastName($data->lastName);
-            $data->setBloodGroup($data->bloodGroup);
-            $data->setGender($data->gender);
-           // $data->addPhoneNumber($data->phoneNumbers);
-            $entityManager->flush();
-             $data =  [
-                'id' => $data->getId(),
-                'FirstName' => $data->getFirstName(),
-                'LastName' => $data->getlastName(),
-                'BloodGroup' => (string)$data->getBloodGroup(),
-                'Gender' => (string)$data->getGender(),
-               //'PhoneNumber' =>$data->getphoneNumbers()
-            ];
-              
-            return $this->json($data);
-             return $this->json([
-               'added successfully'
-            ]);  
+            $user = new User();
+            $entityManager = $doctrine->getManager();
+            $data = $entityManager->getRepository(User::class)->find($id);
+            $formcreated = $this->createForm(UserRecordsForm::class, $data);
+            $formcreated->handleRequest($request);
+            $data = $formcreated->getData();
+            $formcreated->submit(json_decode($request->getContent(), true));
+            if($formcreated->isSubmitted() && $formcreated->isValid())
+            {
+               $data = $formcreated->getData();
+               $entityManager = $doctrine->getManager();
+               $entityManager->persist($data);
+               $entityManager->flush();
+               return new Response(Response::HTTP_CREATED);
+            }
+            dd($data);
+            return new Response(Response::HTTP_NOT_FOUND);
+
    }
-           
-                  
-
-
 }

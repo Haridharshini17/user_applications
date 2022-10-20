@@ -23,7 +23,6 @@ class PhoneNumberForm extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => PhoneNumber::class,
-           // 'allow_extra_fields' => true
         ]);
     }
 }

@@ -71,20 +71,11 @@ class User
 
         return $this;
     }
-    // public function __toString()
-    // {
-    //     return $this->gender;
-    // }
-    
     public function getPhoneNumbers(): Collection
     {
         return $this->phoneNumbers;
     }
-    // public function __toString()
-    // {
-    //     return (string) $this->phoneNumbers;
-    // }
-    public function addPhoneNumber(phoneNumber $phoneNumber): self
+    public function addPhoneNumber(PhoneNumber $phoneNumber): self
     {
         if(!$this->phoneNumbers->contains($phoneNumber))
         {
@@ -92,9 +83,8 @@ class User
             $phoneNumber->setUser($this);
         }
         return $this;
-    }
-    
-    public function removePhoneNumber(phoneNumber $phoneNumber): self
+    } 
+    public function removePhoneNumber(PhoneNumber $phoneNumber): self
     {
         if(!$this->phoneNumbers->contains($phoneNumber))
         {
@@ -129,27 +119,4 @@ class User
  
         return $this;
     }
-
-    // public function __toArray()
-    // {
-    //     return (string) [
-    //         'id' => $this->getId(),
-    //         'firstName' => $this->getFirstName(),
-    //         'lastName' => $this->getLastName(),
-    //         'bloodGroup' => $this->getBloodGroup(),
-    //         'gender' => $this->getGender(),
-    //         'phoneNumber' => $this->getPhoneNumbers(),
-    //     ];
-    // }
-//     public function serialize()
-//    {
-//        return serialize([
-//         $this->id,
-//         $this->firstName,
-//         $this->lastName,
-//         $this->bloodGroup,
-//         $this->gender,
-//         $this->phoneNumber,
-//     ]);
-//    }
 }

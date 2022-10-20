@@ -33,12 +33,10 @@ class UserRecordsForm extends AbstractType
 {
     private $transformer;
     private $transformer1;
-   // private $transformer2;
     public function __construct(BloodGroupTransformer $bloodGroupTransformer, GenderTransformer $genderTransformer)
     {
         $this->transformer = $bloodGroupTransformer;
         $this->transformer1 = $genderTransformer;
-        // $this->transformer2 = $phoneNumberTransformer;
     }
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -61,8 +59,6 @@ class UserRecordsForm extends AbstractType
             ->addModelTransformer($this->transformer);
         $builder->get('gender')
             ->addModelTransformer($this->transformer1);
-        // $builder->get('phoneNumber')
-        //     ->addModelTransformer($this->transformer2);
      }
     public function setDefaultOptions(OptionsResolver $resolver): void
     {

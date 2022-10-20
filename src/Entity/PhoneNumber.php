@@ -34,10 +34,6 @@ class PhoneNumber
     {
         return $this->phoneNumber;
     }
-    // public function __toArray()
-    // {  
-    //     return (string) $this->getPhoneNumber();
-    // }
     public function setPhoneNumber($phoneNumber): self
     {
         $this->phoneNumber = $phoneNumber;
