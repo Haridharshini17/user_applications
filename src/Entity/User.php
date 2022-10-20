@@ -3,10 +3,14 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Validator\Constraints as Assert;
+use App\Validator as NameAssert;
 
 class User
 {
     private $id;
+
+    #[NameAssert\Validation]
     public $firstName;
     public $lastName;
     public $bloodGroup;

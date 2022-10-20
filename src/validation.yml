@@ -1,0 +1,29 @@
+App\Entity\User:
+    properties:
+        firstName:
+            - NotBlank: ~
+            - Length:
+                min: 6
+            - Regex:
+                pattern: '/\d/'
+                match:   false
+                message: Your First name cannot contain a number
+        lastName:
+            - NotBlank: ~
+            - Length:
+                min: 4
+            - Regex:
+                pattern: '/\d/'
+                match:   false
+                message: Your Last name cannot contain a number
+        bloodGroup: 
+            - NotBlank: ~
+        gender: 
+            - NotBlank: ~
+        phoneNumbers: 
+            - NotBlank: ~
+            - Regex:
+                pattern: '/^[0-9]*$/'
+                match:   false
+                message: Your name cannot contain a number
+

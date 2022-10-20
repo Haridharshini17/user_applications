@@ -15,7 +15,7 @@ use Doctrine\ORM\EntityManagerInterface;
 class UserRecords extends AbstractController
 {
   
-    #[Route('/records', name: 'create', methods: ['POST'])]
+    #[Route('/record/insert', name: 'create', methods: ['POST'])]
      public function insert(Request $request, ManagerRegistry $doctrine, EntityManagerInterface $entityManager): Response
      {
         $user = new User;
@@ -32,10 +32,9 @@ class UserRecords extends AbstractController
             $entityManager->flush();
             return new Response(Response::HTTP_CREATED);
         }
-        dd($formcreated->getErrors());
         return new Response(Response::HTTP_ACCEPTED);  
      }
-    #[Route('/records/{id}', name: 'records_shows_correct', methods: ['GET'])]
+    #[Route('/record/display/{id}', name: 'display', methods: ['GET'])]
     public function display(ManagerRegistry $doctrine, $id): Response
     {
         $record = new User;
@@ -53,7 +52,7 @@ class UserRecords extends AbstractController
                 ];
         return $this->json($datass); 
     }
-    #[Route('/record/delete/{id}', name: 'delete_record', methods: ['DELETE'])]
+    #[Route('/record/delete/{id}', name: 'delete', methods: ['DELETE'])]
     public function delete(ManagerRegistry $doctrine, $id): Response
     {
       $data = $doctrine->getManager();
@@ -66,7 +65,7 @@ class UserRecords extends AbstractController
       $data->flush();
        return new Response(Response::HTTP_NO_CONTENT);
     }
-    #[Route('/record/update/{id}', name: 'update_record', methods: ['PATCH'])]
+    #[Route('/record/update/{id}', name: 'update', methods: ['PATCH'])]
     public function update(ManagerRegistry $doctrine ,$id, Request $request): Response
    {
             $user = new User();
