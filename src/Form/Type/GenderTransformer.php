@@ -1,6 +1,6 @@
 <?php
 namespace App\Form\Type;
-use App\Entity\User;
+
 use App\Entity\Gender;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\DataTransformerInterface;

@@ -6,7 +6,6 @@ use Doctrine\Common\Collections\Collection;
 
 class User
 {
-
     private $id;
     public $firstName;
     public $lastName;
@@ -75,6 +74,7 @@ class User
     {
         return $this->phoneNumbers;
     }
+    
     public function addPhoneNumber(PhoneNumber $phoneNumber): self
     {
         if(!$this->phoneNumbers->contains($phoneNumber))

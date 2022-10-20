@@ -1,8 +1,7 @@
 <?php
 namespace App\Form\Type;
-use App\Entity\User;
+
 use App\Entity\BloodGroup;
-use App\Repository\BloodGroupRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\TransformationFailedException;

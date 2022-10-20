@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\BloodGroup;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
@@ -11,16 +10,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use App\Entity\User;
 use App\Entity\PhoneNumber;
 use App\Form\Type\UserRecordsForm;
-use App\Repository\UserRepository;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
-use phpDocumentor\Reflection\DocBlock\Serializer as DocBlockSerializer;
-use Symfony\Bridge\Doctrine\ManagerRegistry as DoctrineManagerRegistry;
-use Symfony\Component\Messenger\Transport\Serialization\Serializer as SerializationSerializer;
-use Symfony\Component\Messenger\Transport\Serialization\SerializerInterface;
-use Symfony\Component\Serializer\Serializer;
-use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-
 
 class UserRecords extends AbstractController
 {
@@ -33,7 +23,6 @@ class UserRecords extends AbstractController
         $phone = $user->addPhoneNumber($phone);
         $formcreated = $this->createForm(UserRecordsForm::class, $user);
         $formcreated->handleRequest($request);
-       // $user = $formcreated->getData();
         $formcreated->submit(json_decode($request->getContent(), true));
         if($formcreated->isSubmitted() && $formcreated->isValid())
         {
@@ -46,21 +35,8 @@ class UserRecords extends AbstractController
         dd($formcreated->getErrors());
         return new Response(Response::HTTP_ACCEPTED);  
      }
-     #[Route('/record/{id}', name: 'recordsn_shows', methods: ['GET'])]
-   //   public function show(ManagerRegistry $doctrine, $id,Request $request): Response
-   //   {
-
-   //          $entityManager = $doctrine->getManager();
-   //          $data = $entityManager->getRepository(User::class)->find($id);
-   //          $formcreated = $this->createForm(UserRecordsForm::class, $data);
-   //          return new Response($formcreated->getData());
-   //      //$record = new User;
-   //    //   $entityManager = $doctrine->getManager();
-   //    //   $record = $entityManager->getRepository(User::class)->find($id);
-   //    //   return new Response($record, Response::HTTP_ACCEPTED);   
-   //   } 
-    #[Route('/records/{id}', name: 'records_shows_correct', methods: ['PUT'])]
-    public function display(ManagerRegistry $doctrine, $id, SerializerInterface $serializer): Response
+    #[Route('/records/{id}', name: 'records_shows_correct', methods: ['GET'])]
+    public function display(ManagerRegistry $doctrine, $id): Response
     {
         $record = new User;
         $phone = new PhoneNumber;
@@ -73,7 +49,7 @@ class UserRecords extends AbstractController
                  'LastName'=>$record->getLastName(),
                  'BloodGroup'=>(string)$record->getBloodGroup(),
                  'Gender'=>(string)$record->getGender(),
-                 'PhoneNumber'=>$record->getPhoneNumbers(),
+                 'PhoneNumber'=>json_encode($record->getPhoneNumbers()),
                 ];
         return $this->json($datass); 
     }
