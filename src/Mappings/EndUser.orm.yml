@@ -1,0 +1,17 @@
+App\Entity\EndUser:
+ type: entity
+ repositoryClass: App\Repository\EndUserRepository
+ table: end_user
+ id: 
+  id:
+    type: integer
+    generator:
+      strategy: AUTO 
+ fields:
+  email:
+    type: text
+    length: 50
+  roles:
+    type: json
+  password:
+    type: string
