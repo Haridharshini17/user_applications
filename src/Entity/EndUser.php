@@ -13,12 +13,7 @@ class EndUser implements UserInterface, PasswordAuthenticatedUserInterface
     private $email = null;
     private $roles = [];
     private $password;
-    private $apiTokens;
 
-    public function __construct()
-    {
-        $this->apiTokens = new ArrayCollection();
-    }
     public function getId(): ?int
     {
         return $this->id;
@@ -71,30 +66,4 @@ class EndUser implements UserInterface, PasswordAuthenticatedUserInterface
     {
         
     }
-    public function getApiTokens(): Collection
-    {
-        return $this->apiTokens;
-    }
-
-    public function addApiToken(ApiToken $apiToken): self
-    {
-        if (!$this->apiTokens->contains($apiToken)) {
-            $this->apiTokens[] = $apiToken;
-            $apiToken->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeApiToken(ApiToken $apiToken): self
-    {
-        if ($this->apiTokens->removeElement($apiToken)) {
-            if ($apiToken->getUser() === $this) {
-                $apiToken->setUser(null);
-            }
-        }
-
-        return $this;
-    }
-
 }

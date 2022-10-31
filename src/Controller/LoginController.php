@@ -16,7 +16,7 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class LoginController extends AbstractController
 {
     
-    #[Route("/Login", name:"login", methods: ['POST'])]
+    #[Route("/api/login/form", name:"login", methods: ['POST'])]
     public function Login(Request $request, ManagerRegistry $doctrine, EntityManagerInterface $entityManager, Connection $conn): Response
     {
        $user = new EndUser;
@@ -29,19 +29,18 @@ class LoginController extends AbstractController
         $email = $formcreated["email"]->getData();
         $password = $formcreated["password"]->getData();
         $roles = json_encode($formcreated["roles"]->getData());
-        $users = $conn->fetchAllAssociative('SELECT *FROM EndUser where email = "'.$email.'" AND password= "'.$password.'"');
+        $users = $conn->fetchAllAssociative('SELECT *FROM EndUser where email = "'.$email.'" AND password = "'.$password.'"');
         $results = json_encode($users);
         if(!empty($users))
        {
-            return new RedirectResponse("http://localhost:8000/record/display/278");
+          return new RedirectResponse("http://localhost:8000/record/display/50");
        }
       else
       {
              echo "failure";
       }
-        return new Response($results);
        }
-       dd($formcreated->getErrors());
+      // dd($formcreated->getErrors());
         return new Response(Response::HTTP_BAD_REQUEST);
     }
 }

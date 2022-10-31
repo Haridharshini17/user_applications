@@ -19,16 +19,10 @@ use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
  */
 class EndUserRepository extends ServiceEntityRepository implements PasswordUpgraderInterface
 {
-    public function __construct(ManagerRegistry $registry, ApiTokenRepository $apiTokenRepository)
+    public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, EndUser::class);
-        $this->apiTokenRepository = $apiTokenRepository;
     }
-    public function findByApiToken(string $apiToken): ?EndUser
-    {
-        return $this->apiTokenRepository->findOneBy(['token' => $apiToken])?->getUser();
-    }
-
     public function save(EndUser $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
@@ -61,28 +55,29 @@ class EndUserRepository extends ServiceEntityRepository implements PasswordUpgra
         $this->save($user, true);
     }
 
-//    /**
-//     * @return EndUser[] Returns an array of EndUser objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('e')
-//            ->andWhere('e.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('e.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+   /**
+    * @return EndUser[] Returns an array of EndUser objects
+    */
 
-//    public function findOneBySomeField($value): ?EndUser
-//    {
-//        return $this->createQueryBuilder('e')
-//            ->andWhere('e.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+   public function findByExampleField($value): array
+   {
+       return $this->createQueryBuilder('e')
+           ->andWhere('e.exampleField = :val')
+           ->setParameter('val', $value)
+           ->orderBy('e.id', 'ASC')
+           ->setMaxResults(10)
+           ->getQuery()
+           ->getResult()
+       ;
+   }
+
+   public function findOneBySomeField($value): ?EndUser
+   {
+       return $this->createQueryBuilder('e')
+           ->andWhere('e.exampleField = :val')
+           ->setParameter('val', $value)
+           ->getQuery()
+           ->getOneOrNullResult()
+       ;
+   }
 }

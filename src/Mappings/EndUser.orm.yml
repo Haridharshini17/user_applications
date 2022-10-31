@@ -15,10 +15,5 @@ App\Entity\EndUser:
     type: json
   password:
     type: string
- oneToMany:
-  apiTokens:
-    targetEntity: ApiToken
-    mappedBy: user
-    cascade: ["persist","remove"]
-    onDelete: CASCADE
+ 
   
