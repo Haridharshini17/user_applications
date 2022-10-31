@@ -1,7 +1,7 @@
 App\Entity\EndUser:
  type: entity
  repositoryClass: App\Repository\EndUserRepository
- table: end_user
+ table: EndUser
  id: 
   id:
     type: integer
@@ -15,3 +15,10 @@ App\Entity\EndUser:
     type: json
   password:
     type: string
+ oneToMany:
+  apiTokens:
+    targetEntity: ApiToken
+    mappedBy: user
+    cascade: ["persist","remove"]
+    onDelete: CASCADE
+  

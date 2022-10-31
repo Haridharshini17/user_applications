@@ -10,6 +10,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use App\Entity\User;
 use App\Entity\PhoneNumber;
 use App\Form\Type\UserRecordsForm;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
 
 class UserRecords extends AbstractController
@@ -32,6 +33,7 @@ class UserRecords extends AbstractController
             $entityManager->flush();
             return new Response(Response::HTTP_CREATED);
         }
+        dd($formcreated);
         return new Response(Response::HTTP_ACCEPTED);  
      }
     #[Route('/record/display/{id}', name: 'display', methods: ['GET'])]
@@ -39,7 +41,9 @@ class UserRecords extends AbstractController
     {
         $record = new User;
         $phone = new PhoneNumber;
-        $record->addPhoneNumber($phone);
+
+        $record = $record->addPhoneNumber($phone);
+        $record->getPhoneNumbers();
         $entityManager = $doctrine->getManager();
         $record = $entityManager->getRepository(User::class)->find($id);
         $datass =  [
@@ -83,7 +87,7 @@ class UserRecords extends AbstractController
                $entityManager->flush();
                return new Response(Response::HTTP_CREATED);
             }
-            dd($data);
+            dd($formcreated);
             return new Response(Response::HTTP_NOT_FOUND);
 
    }
