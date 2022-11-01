@@ -35,7 +35,7 @@ class LoginController extends AbstractController
         $results = json_encode($users);
         if(!empty($users))
        {
-          
+          dd($users);
           return new RedirectResponse("http://localhost:8000/record/display/50");
        }
       else

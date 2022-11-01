@@ -13,7 +13,15 @@ class EndUser implements UserInterface, PasswordAuthenticatedUserInterface
     private $email = null;
     private $roles = [];
     private $password;
-
+    private $plainPassword;
+    public function getPlainPassword()
+    {
+        return $this->plainPassword;
+    }
+    public function setPlainPassword($plainPassword): void
+    {
+        $this->plainPassword = $plainPassword;
+    }
     public function getId(): ?int
     {
         return $this->id;
@@ -47,7 +55,9 @@ class EndUser implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-   
+    /**
+     * @see PasswordAuthenticatedUserInterface
+     */
     public function getPassword(): string
     {
         return $this->password;
@@ -59,11 +69,14 @@ class EndUser implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+    /**
+     *   
+     * @see UserInterface
+     */
     public function getSalt(): ?string
     {
         return null;
     }
-  
     public function eraseCredentials()
     {
         $this->plainPassword = null;
