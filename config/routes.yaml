@@ -1,6 +1,6 @@
 controllers:
     resource: ../src/Controller/
     type: attribute
-api_login_form:
-    path: /api/login/form
+api_login_check:
+    path: /api/login_check
     methods: ['POST']

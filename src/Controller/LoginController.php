@@ -16,7 +16,7 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class LoginController extends AbstractController
 {
     
-    #[Route("/api/login/form", name:"login", methods: ['POST'])]
+    #[Route("/api/login_check", name:"login", methods: ['POST'])]
     public function Login(Request $request, ManagerRegistry $doctrine, EntityManagerInterface $entityManager, Connection $conn): Response
     {
        $user = new EndUser;
