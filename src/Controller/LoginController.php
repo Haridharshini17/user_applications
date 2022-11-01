@@ -13,11 +13,12 @@ use Doctrine\DBAL\Connection;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
+
 class LoginController extends AbstractController
 {
-    
-    #[Route("/api/login_check", name:"login", methods: ['POST'])]
-    public function Login(Request $request, ManagerRegistry $doctrine, EntityManagerInterface $entityManager, Connection $conn): Response
+
+    #[Route("/api/login", name:'app_login', methods: ["POST"])]
+    public function login(Request $request, ManagerRegistry $doctrine, EntityManagerInterface $entityManager, Connection $conn): Response
     {
        $user = new EndUser;
        $formcreated = $this->createForm(LoginForm::class, $user);
@@ -28,11 +29,13 @@ class LoginController extends AbstractController
         $user = new EndUser;
         $email = $formcreated["email"]->getData();
         $password = $formcreated["password"]->getData();
+        dd($password);
         $roles = json_encode($formcreated["roles"]->getData());
         $users = $conn->fetchAllAssociative('SELECT *FROM EndUser where email = "'.$email.'" AND password = "'.$password.'"');
         $results = json_encode($users);
         if(!empty($users))
        {
+          
           return new RedirectResponse("http://localhost:8000/record/display/50");
        }
       else

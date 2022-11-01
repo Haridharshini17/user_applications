@@ -47,6 +47,7 @@ class EndUser implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+   
     public function getPassword(): string
     {
         return $this->password;
@@ -62,8 +63,9 @@ class EndUser implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return null;
     }
+  
     public function eraseCredentials()
     {
-        
+        $this->plainPassword = null;
     }
 }

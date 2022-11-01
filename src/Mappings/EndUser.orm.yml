@@ -9,8 +9,8 @@ App\Entity\EndUser:
       strategy: AUTO 
  fields:
   email:
-    type: text
-    length: 50
+    type: string
+    length: 150
   roles:
     type: json
   password:
