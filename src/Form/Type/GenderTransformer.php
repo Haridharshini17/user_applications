@@ -18,7 +18,8 @@ Class GenderTransformer implements DataTransformerInterface
     public function transform($gender): string
     {
     
-        if (null === $gender) {
+        if (null === $gender) 
+        {
             return "";
         }
         return $gender->getgender();
@@ -26,7 +27,8 @@ Class GenderTransformer implements DataTransformerInterface
     public function reverseTransform($gender): ?Gender
     {
         
-        if (!$gender) {
+        if (!$gender) 
+        {
             return null;
         }
 
@@ -35,12 +37,12 @@ Class GenderTransformer implements DataTransformerInterface
             ->find($gender)
         ;
 
-        if (null === $gender) {
+        if (null === $gender) 
+        {
             throw new TransformationFailedException(sprintf(
                 'An gender "%s" does not exist!',$gender
             ));
         }
-
         return $gender;
     }
 }

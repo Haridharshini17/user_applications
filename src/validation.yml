@@ -22,8 +22,3 @@ App\Entity\User:
             - NotBlank: ~
         phoneNumbers: 
             - NotBlank: ~
-            # - Regex:
-            #     pattern: '/^[0-9]*$/'
-            #     match:   false
-            #     message: Your name cannot contain a number
-

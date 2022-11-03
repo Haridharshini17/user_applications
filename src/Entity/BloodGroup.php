@@ -1,5 +1,6 @@
 <?php
 namespace App\Entity;
+
 class BloodGroup
 {
     private int $id;
@@ -17,14 +18,15 @@ class BloodGroup
     {
         return $this->bloodGroup;
     }
-     public function __toString()
-     {  
+
+    public function __toString()
+    {  
         return $this->getBloodGroup();
-     }
+    }
+
     public function setBloodGroup($bloodGroup): self
     {
         $this->bloodGroup = $bloodGroup;
-
         return $this;
     }
 }

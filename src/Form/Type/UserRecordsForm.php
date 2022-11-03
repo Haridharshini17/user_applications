@@ -45,7 +45,7 @@ class UserRecordsForm extends AbstractType
             ->addModelTransformer($this->transformer);
         $builder->get('gender')
             ->addModelTransformer($this->transformer1);
-     }
+    }
     public function setDefaultOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults(array(
@@ -60,5 +60,4 @@ class UserRecordsForm extends AbstractType
         );
     }
 }
-
 ?>

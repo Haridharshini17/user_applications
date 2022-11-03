@@ -11,8 +11,6 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\DBAL\Connection;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
-
 
 class LoginController extends AbstractController
 {
@@ -26,27 +24,19 @@ class LoginController extends AbstractController
        $formcreated->submit(json_decode($request->getContent(), true));
        if($formcreated->isSubmitted() && $formcreated->isValid())
        {
-        $user = new EndUser;
-        //dd($user);
-        $email = $formcreated["email"]->getData();
-        $password = $formcreated["password"]->getData();
-       // dd($email);
-       // dd($password);
-        $roles = json_encode($formcreated["roles"]->getData());
-        $users = $conn->fetchAllAssociative('SELECT *FROM EndUser where email = "'.$email.'" AND password = "'.$password.'"');
-        //dd($users);
-        $results = json_encode($users);
-        if(!empty($users))
-       {
-          dd($users);
-          return new RedirectResponse("http://localhost:8000/record/display/50");
-       }
-      else
-      {
-             echo "failure";
-      }
-       }
-      // dd($formcreated->getErrors());
+           $user = new EndUser;
+           $email = $formcreated["email"]->getData();
+           $password = $formcreated["password"]->getData();
+           $users = $conn->fetchAllAssociative('SELECT *FROM EndUser where email = "'.$email.'" AND password = "'.$password.'"');
+           if(!empty($users))
+           {
+              return new RedirectResponse("http://localhost:8000/record/display/50");
+           }
+           else
+           {
+              echo "failure";
+           }
+        }
         return new Response(Response::HTTP_BAD_REQUEST);
     }
 }

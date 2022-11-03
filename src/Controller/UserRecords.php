@@ -10,14 +10,12 @@ use Doctrine\Persistence\ManagerRegistry;
 use App\Entity\User;
 use App\Entity\PhoneNumber;
 use App\Form\Type\UserRecordsForm;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
 
 class UserRecords extends AbstractController
 {
-  
-     #[Route('/record/insert', name: 'create', methods: ['POST'])]
-     public function insert(Request $request, ManagerRegistry $doctrine, EntityManagerInterface $entityManager): Response
+   #[Route('/record/insert', name: 'create', methods: ['POST'])]
+   public function insert(Request $request, ManagerRegistry $doctrine, EntityManagerInterface $entityManager): Response
      {
         $user = new User;
         $phone = new PhoneNumber;
@@ -33,15 +31,13 @@ class UserRecords extends AbstractController
             $entityManager->flush();
             return new Response(Response::HTTP_CREATED);
         }
-        //dd($formcreated);
         return new Response(Response::HTTP_ACCEPTED);  
      }
-    #[Route('/record/display/{id}', name: 'display', methods: ['GET'])]
-    public function display(ManagerRegistry $doctrine, $id): Response
-    {
+   #[Route('/record/display/{id}', name: 'display', methods: ['GET'])]
+   public function display(ManagerRegistry $doctrine, $id): Response
+   {
         $record = new User;
         $phone = new PhoneNumber;
-
         $record = $record->addPhoneNumber($phone);
         $record->getPhoneNumbers();
         $entityManager = $doctrine->getManager();
@@ -52,43 +48,41 @@ class UserRecords extends AbstractController
                  'LastName'=>$record->getLastName(),
                  'BloodGroup'=>(string)$record->getBloodGroup(),
                  'Gender'=>(string)$record->getGender(),
-                 'PhoneNumber'=>json_encode($record->getPhoneNumbers()),
+                 'PhoneNumber'=>(json_decode((serialize($record->getPhoneNumbers())))),
                 ];
         return $this->json($datass); 
-    }
-    #[Route('/record/delete/{id}', name: 'delete', methods: ['DELETE'])]
-    public function delete(ManagerRegistry $doctrine, $id): Response
-    {
-      $data = $doctrine->getManager();
-      $record = $doctrine->getRepository(User::class)->find($id);
-      if(!$record)
-      {
-         return new Response(Response::HTTP_NOT_FOUND);
-      }
-      $data->remove($record);
-      $data->flush();
-       return new Response(Response::HTTP_NO_CONTENT);
-    }
-    #[Route('/record/update/{id}', name: 'update', methods: ['PATCH'])]
-    public function update(ManagerRegistry $doctrine ,$id, Request $request): Response
+   }
+   #[Route('/record/delete/{id}', name: 'delete', methods: ['DELETE'])]
+   public function delete(ManagerRegistry $doctrine, $id): Response
    {
-            $user = new User();
-            $entityManager = $doctrine->getManager();
-            $data = $entityManager->getRepository(User::class)->find($id);
-            $formcreated = $this->createForm(UserRecordsForm::class, $data);
-            $formcreated->handleRequest($request);
+        $data = $doctrine->getManager();
+        $record = $doctrine->getRepository(User::class)->find($id);
+        if(!$record)
+        {
+           return new Response(Response::HTTP_NOT_FOUND);
+        }
+        $data->remove($record);
+        $data->flush();
+        return new Response(Response::HTTP_NO_CONTENT);
+   }
+   #[Route('/record/update/{id}', name: 'update', methods: ['PATCH'])]
+   public function update(ManagerRegistry $doctrine ,$id, Request $request): Response
+   {
+         $user = new User();
+         $entityManager = $doctrine->getManager();
+         $data = $entityManager->getRepository(User::class)->find($id);
+         $formcreated = $this->createForm(UserRecordsForm::class, $data);
+         $formcreated->handleRequest($request);
+         $data = $formcreated->getData();
+         $formcreated->submit(json_decode($request->getContent(), true));
+         if($formcreated->isSubmitted() && $formcreated->isValid())
+         {
             $data = $formcreated->getData();
-            $formcreated->submit(json_decode($request->getContent(), true));
-            if($formcreated->isSubmitted() && $formcreated->isValid())
-            {
-               $data = $formcreated->getData();
-               $entityManager = $doctrine->getManager();
-               $entityManager->persist($data);
-               $entityManager->flush();
-               return new Response(Response::HTTP_CREATED);
-            }
-            dd($formcreated);
-            return new Response(Response::HTTP_NOT_FOUND);
-
+            $entityManager = $doctrine->getManager();
+            $entityManager->persist($data);
+            $entityManager->flush();
+            return new Response(Response::HTTP_CREATED);
+         }
+         return new Response(Response::HTTP_NOT_FOUND);
    }
 }
