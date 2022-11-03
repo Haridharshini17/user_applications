@@ -14,6 +14,7 @@ class EndUser implements UserInterface, PasswordAuthenticatedUserInterface
     private $roles = [];
     private $password;
     private $plainPassword;
+    
     public function getPlainPassword()
     {
         return $this->plainPassword;

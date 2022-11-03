@@ -15,7 +15,8 @@ App\Entity\User:
             - Regex:
                 pattern: '/\d/'
                 match:   false
-                message: Your Last name cannot contain a number
+                message: Your First name cannot contain a number
+           
         bloodGroup: 
             - NotBlank: ~
         gender: 
