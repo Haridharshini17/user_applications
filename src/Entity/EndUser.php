@@ -10,7 +10,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class EndUser implements UserInterface, PasswordAuthenticatedUserInterface
 {
     private  $id = null;
-    private $email = null;
+    public $email = null;
     private $roles = [];
     private $password;
     private $plainPassword;

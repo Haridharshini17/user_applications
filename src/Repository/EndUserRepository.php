@@ -40,10 +40,6 @@ class EndUserRepository extends ServiceEntityRepository implements PasswordUpgra
             $this->getEntityManager()->flush();
         }
     }
-
-    /**
-     * Used to upgrade (rehash) the user's password automatically over time.
-     */
     public function upgradePassword(PasswordAuthenticatedUserInterface $user, string $newHashedPassword): void
     {
         if (!$user instanceof EndUser) {
@@ -56,7 +52,7 @@ class EndUserRepository extends ServiceEntityRepository implements PasswordUpgra
     }
 
    /**
-    * @return EndUser[] Returns an array of EndUser objects
+    * @return EndUser[] 
     */
 
    public function findByExampleField($value): array

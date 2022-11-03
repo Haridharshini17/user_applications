@@ -16,7 +16,7 @@ use Doctrine\ORM\EntityManagerInterface;
 class UserRecords extends AbstractController
 {
   
-    #[Route('/record/insert', name: 'create', methods: ['POST'])]
+     #[Route('/record/insert', name: 'create', methods: ['POST'])]
      public function insert(Request $request, ManagerRegistry $doctrine, EntityManagerInterface $entityManager): Response
      {
         $user = new User;
@@ -33,7 +33,7 @@ class UserRecords extends AbstractController
             $entityManager->flush();
             return new Response(Response::HTTP_CREATED);
         }
-        dd($formcreated);
+        //dd($formcreated);
         return new Response(Response::HTTP_ACCEPTED);  
      }
     #[Route('/record/display/{id}', name: 'display', methods: ['GET'])]

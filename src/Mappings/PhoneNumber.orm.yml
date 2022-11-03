@@ -18,6 +18,6 @@ App\Entity\PhoneNumber:
     cascade: ["persist"]
     joinColumn:
       nullable: false
-    onDelete: CASCADE
+      onDelete: CASCADE
      
     

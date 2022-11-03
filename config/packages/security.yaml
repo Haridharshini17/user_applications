@@ -24,15 +24,21 @@ security:
             pattern: ^/api
             stateless: true
             jwt: ~
+            provider: app_user_provider
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
+            pattern: ^/
             lazy: true
             provider: app_user_provider
+            custom_authenticators:
+                - App\Security\Authenticator
     access_control:
-        - { path: ^/api/login, roles: PUBLIC_ACCESS }
-        - { path: ^/api,       roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/api/login,     roles: PUBLIC_ACCESS }
+        - { path: ^/api,           roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/record/insert, roles: ROLE_USER, methods: [POST] }
+        
 when@test:
     security:
         password_hashers:

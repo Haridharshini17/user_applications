@@ -27,11 +27,14 @@ class LoginController extends AbstractController
        if($formcreated->isSubmitted() && $formcreated->isValid())
        {
         $user = new EndUser;
+        //dd($user);
         $email = $formcreated["email"]->getData();
         $password = $formcreated["password"]->getData();
-        dd($password);
+       // dd($email);
+       // dd($password);
         $roles = json_encode($formcreated["roles"]->getData());
         $users = $conn->fetchAllAssociative('SELECT *FROM EndUser where email = "'.$email.'" AND password = "'.$password.'"');
+        //dd($users);
         $results = json_encode($users);
         if(!empty($users))
        {
