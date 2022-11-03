@@ -31,6 +31,7 @@ class UserRecords extends AbstractController
             $entityManager->flush();
             return new Response(Response::HTTP_CREATED);
         }
+        dd($formcreated);
         return new Response(Response::HTTP_ACCEPTED);  
      }
    #[Route('/record/display/{id}', name: 'display', methods: ['GET'])]

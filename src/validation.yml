@@ -10,13 +10,8 @@ App\Entity\User:
                 message: Your First name cannot contain a number
         lastName:
             - NotBlank: ~
-            - Length:
-                min: 4
-            - Regex:
-                pattern: '/\d/'
-                match:   false
-                message: Your First name cannot contain a number
-           
+            - App\Validator\ContainsAlphaNumeric:
+                mode: 'loose'    
         bloodGroup: 
             - NotBlank: ~
         gender: 
