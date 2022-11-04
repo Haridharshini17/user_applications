@@ -2,14 +2,12 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class EndUser implements UserInterface, PasswordAuthenticatedUserInterface
 {
-    private  $id = null;
+    private $id = null;
     public $email = null;
     private $roles = [];
     private $password;

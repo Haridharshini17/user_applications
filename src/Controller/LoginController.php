@@ -15,29 +15,29 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 class LoginController extends AbstractController
 {
 
-    #[Route("/api/login", name:'app_login', methods: ["POST"])]
-    public function login(Request $request, ManagerRegistry $doctrine, EntityManagerInterface $entityManager, Connection $conn): Response
-    {
-       $user = new EndUser;
-       $formcreated = $this->createForm(LoginForm::class, $user);
-       $formcreated->handleRequest($request);
-       $formcreated->submit(json_decode($request->getContent(), true));
-       if($formcreated->isSubmitted() && $formcreated->isValid())
-       {
-           $user = new EndUser;
-           $email = $formcreated["email"]->getData();
-           $password = $formcreated["password"]->getData();
-           $users = $conn->fetchAllAssociative('SELECT *FROM EndUser where email = "'.$email.'" AND password = "'.$password.'"');
-           if(!empty($users))
-           {
-              return new RedirectResponse("http://localhost:8000/record/display/50");
-           }
-           else
-           {
-              echo "failure";
-           }
-        }
-        return new Response(Response::HTTP_BAD_REQUEST);
-    }
+   #[Route("/api/login", name:'app_login', methods: ["POST"])]
+   public function login(Request $request, ManagerRegistry $doctrine, EntityManagerInterface $entityManager, Connection $conn): Response
+   {
+      $user = new EndUser;
+      $createForm = $this->createForm(LoginForm::class, $user);
+      $createForm->handleRequest($request);
+      $createForm->submit(json_decode($request->getContent(), true));
+      if($createForm->isSubmitted() && $createForm->isValid())
+      {
+         $user = new EndUser;
+         $email = $createForm["email"]->getData();
+         $password = $createForm["password"]->getData();
+         $users = $conn->fetchAllAssociative('SELECT *FROM EndUser where email = "'.$email.'" AND password = "'.$password.'"');
+         if(!empty($users))
+         {
+            return new RedirectResponse("http://localhost:8000/record/display/50");
+         }
+         else
+         {
+            echo "failure";
+         }
+      }
+      return new Response(Response::HTTP_BAD_REQUEST);
+   }
 }
 ?>

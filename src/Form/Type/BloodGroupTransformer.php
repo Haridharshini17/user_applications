@@ -17,14 +17,16 @@ Class BloodGroupTransformer implements DataTransformerInterface
 
     public function transform($bloodGroup): string
     {
-        if (null === $bloodGroup) {
+        if (null === $bloodGroup) 
+        {
             return "";
         }
         return $bloodGroup->getBloodGroup();
     }
     public function reverseTransform($bloodGroup): ?BloodGroup
     {
-        if(!$bloodGroup) {
+        if(!$bloodGroup) 
+        {
             return null;
         }
 
@@ -33,7 +35,8 @@ Class BloodGroupTransformer implements DataTransformerInterface
             ->find($bloodGroup)
         ;
 
-        if (null === $bloodGroup) {
+        if (null === $bloodGroup) 
+        {
             throw new TransformationFailedException(sprintf(
                 'An Bloodgroup "%s" does not exist!',$bloodGroup
             ));

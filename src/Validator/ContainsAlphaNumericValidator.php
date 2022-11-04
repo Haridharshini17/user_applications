@@ -10,19 +10,23 @@ class ContainsAlphaNumericValidator extends ConstraintValidator
 {
     public function validate($value, Constraint $constraint): void
     {
-        if (!$constraint instanceof ContainsAlphanumeric) {
+        if (!$constraint instanceof ContainsAlphanumeric) 
+        {
             throw new UnexpectedTypeException($constraint, ContainsAlphanumeric::class);
         }
 
-        if (null === $value || '' === $value) {
+        if (null === $value || '' === $value) 
+        {
             return;
         }
 
-        if (!is_string($value)) {
+        if (!is_string($value)) 
+        {
             throw new UnexpectedValueException($value, 'string');
         }
         
-        if (!preg_match('/^[a-zA-Z0-9]+$/', $value, $matches)) {
+        if (!preg_match('/^[a-zA-Z0-9]+$/', $value, $matches)) 
+        {
             $this->context->buildViolation($constraint->message)
                 ->setParameter('{{ string }}', $value)
                 ->addViolation();

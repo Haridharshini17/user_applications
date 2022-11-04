@@ -37,10 +37,10 @@ security:
     access_control:
         - { path: ^/api/login,     roles: PUBLIC_ACCESS }
         - { path: ^/api,           roles: IS_AUTHENTICATED_FULLY }
-        - { path: ^/record/insert, roles: ROLE_USER, methods: [POST] }
-        - { path: ^/record/display/, roles: ROLE_USER, methods: [GET] }
-        - { path: ^/record/update/, roles: ROLE_USER, methods: [PATCH] }
-        - { path: ^/record/delete/, roles: ROLE_USER, methods: [DELETE] }
+        - { path: ^/insert/record, roles: ROLE_USER, methods: [POST] }
+        - { path: ^/display/record/, roles: ROLE_USER, methods: [GET] }
+        - { path: ^/update/record/, roles: ROLE_USER, methods: [PATCH] }
+        - { path: ^/delete/record/, roles: ROLE_USER, methods: [DELETE] }
         
 when@test:
     security:
