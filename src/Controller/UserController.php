@@ -10,8 +10,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\User;
-use App\Entity\PhoneNumber;
-use App\Form\Type\UserRecordsForm;
 use App\Service\UserService;
 
 class UserController extends AbstractController
@@ -21,29 +19,20 @@ class UserController extends AbstractController
         $this->baseController = $baseController;
     }
 
-   #[Route('api/user/add', name: 'add', methods: ['POST'])]
+   #[Route('user/add', name: 'add', methods: ['POST'])]
    public function insert(Request $request, ManagerRegistry $doctrine, EntityManagerInterface $entityManager): Response
-   {
-    
-    $user = new User;
-    $phoneNumber = new PhoneNumber;
-    $phoneNumber = $user->addPhoneNumber($phoneNumber);
-    $createForm = $this->createForm(UserRecordsForm::class, $user);
-    $createForm->handleRequest($request);
-    $createForm->submit(json_decode($request->getContent(), true));
-    if($createForm->isSubmitted() && $createForm->isValid()) {
-         $user = $createForm->getData();
-         $entityManager = $doctrine->getManager();
-         $entityManager->persist($user);
-         $entityManager->flush();
-         $success=$this->baseController->successResponse();
-         return new JsonResponse($success);
-     }
-     $failure = $this->baseController->failureResponse();
-     return new JsonResponse($failure);  
+   { 
+        $createForm = $this->baseController->insertData($request,$doctrine,$entityManager);
+        if($createForm->isSubmitted() && $createForm->isValid()) {
+            $this->baseController->dataConnection($createForm,$doctrine,$entityManager);
+            $success=$this->baseController->successResponse();
+            return new JsonResponse($success);
+        }
+        $failure = $this->baseController->failureResponse();
+        return new JsonResponse($failure);  
    }
 
-   #[Route('/api/user/display/{id}', name: 'display', methods: ['GET'])]
+   #[Route('user/display/{id}', name: 'display', methods: ['GET'])]
    public function display(ManagerRegistry $doctrine, $id): Response
    {
         $displayData = new UserService();
@@ -51,15 +40,14 @@ class UserController extends AbstractController
         return new Response($this->json($datas));
    }
 
-   #[Route('/api/user/delete/{id}', name: 'delete', methods: ['DELETE'])]
+   #[Route('user/delete/{id}', name: 'delete', methods: ['DELETE'])]
    public function delete(ManagerRegistry $doctrine, $id): Response
    {
-        $baseController = new BaseController();
-        $data = $doctrine->getManager();
+        $deleteData = $doctrine->getManager();
         $record = $doctrine->getRepository(User::class)->find($id);
         if($record) {
-		    $data->remove($record);
-            $data->flush();
+		    $deleteData->remove($record);
+            $deleteData->flush();
             $success=$this->baseController->successResponse();
             return new JsonResponse($success);
         }
@@ -67,25 +55,17 @@ class UserController extends AbstractController
         return new JsonResponse($failure);
    }
 
-   #[Route('/api/user/update/{id}', name: 'update', methods: ['PATCH'])]
-   public function update(ManagerRegistry $doctrine ,$id, Request $request): Response
+   #[Route('user/update/{id}', name: 'update', methods: ['PATCH'])]
+   public function update(ManagerRegistry $doctrine ,$id, Request $request, EntityManagerInterface $entityManager): Response
    {
-        $user = new User();
-        $entityManager = $doctrine->getManager();
-        $data = $entityManager->getRepository(User::class)->find($id);
-        $createForm = $this->createForm(UserRecordsForm::class, $data);
-        $createForm->handleRequest($request);
-        $data = $createForm->getData();
-        $createForm->submit(json_decode($request->getContent(), true));
+        $createForm = $this->baseController->updateData($doctrine,$id,$request);
         if($createForm->isSubmitted() && $createForm->isValid()) {
-           $data = $createForm->getData();
-           $entityManager = $doctrine->getManager();
-           $entityManager->persist($data);
-           $entityManager->flush();
-           $success=$this->baseController->successResponse();
-           return new JsonResponse($success);
+            $this->baseController->dataConnection($createForm,$doctrine,$entityManager);
+            $success=$this->baseController->successResponse();
+            return new JsonResponse($success);
         }
         $failure = $this->baseController->failureResponse();
-        return new JsonResponse($failure);
+        return new JsonResponse($failure);  
     }
 }
+?>

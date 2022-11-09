@@ -36,10 +36,11 @@ security:
                 - App\Security\Authenticator
     access_control:
         - { path: ^/api/login,     roles: PUBLIC_ACCESS }
-        - { path: ^api/user/add, roles: ROLE_USER, methods: [POST] }
-        - { path: ^api/user/display/, roles: ROLE_USER, methods: [GET] }
-        - { path: ^api/user/update/, roles: ROLE_USER, methods: [PATCH] }
-        - { path: ^api/user/delete/, roles: ROLE_USER, methods: [DELETE] }
+        - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }
+        - { path: user/add, roles: ROLE_USER, methods: [POST] }
+        - { path: user/display/, roles: ROLE_USER, methods: [GET] }
+        - { path: user/update/, roles: ROLE_USER, methods: [PATCH] }
+        - { path: user/delete/, roles: ROLE_USER, methods: [DELETE] }
         
 when@test:
     security:
