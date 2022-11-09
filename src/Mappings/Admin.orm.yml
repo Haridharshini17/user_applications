@@ -1,7 +1,7 @@
-App\Entity\EndUser:
+App\Entity\Admin:
  type: entity
- repositoryClass: App\Repository\EndUserRepository
- table: EndUser
+ repositoryClass: App\Repository\AdminRepository
+ table: admin
  id: 
   id:
     type: integer

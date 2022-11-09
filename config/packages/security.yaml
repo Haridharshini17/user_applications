@@ -8,7 +8,7 @@ security:
     providers:
         app_user_provider:
             entity:
-                class: App\Entity\EndUser
+                class: App\Entity\Admin
                 property: email
     firewalls:
         login:
@@ -36,11 +36,10 @@ security:
                 - App\Security\Authenticator
     access_control:
         - { path: ^/api/login,     roles: PUBLIC_ACCESS }
-        - { path: ^/api,           roles: IS_AUTHENTICATED_FULLY }
-        - { path: ^/insert/record, roles: ROLE_USER, methods: [POST] }
-        - { path: ^/display/record/, roles: ROLE_USER, methods: [GET] }
-        - { path: ^/update/record/, roles: ROLE_USER, methods: [PATCH] }
-        - { path: ^/delete/record/, roles: ROLE_USER, methods: [DELETE] }
+        - { path: ^api/user/add, roles: ROLE_USER, methods: [POST] }
+        - { path: ^api/user/display/, roles: ROLE_USER, methods: [GET] }
+        - { path: ^api/user/update/, roles: ROLE_USER, methods: [PATCH] }
+        - { path: ^api/user/delete/, roles: ROLE_USER, methods: [DELETE] }
         
 when@test:
     security:

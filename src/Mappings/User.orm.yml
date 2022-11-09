@@ -35,7 +35,7 @@ App\Entity\User:
  oneToMany:
   phoneNumbers:
     targetEntity: PhoneNumber
-    mappedBy: users
+    mappedBy: user
     cascade: ["persist","remove"]
     onDelete: CASCADE
   

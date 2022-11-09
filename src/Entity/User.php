@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -7,7 +8,6 @@ use Doctrine\Common\Collections\Collection;
 class User
 {
     private $id;
-
     public $firstName;
     public $lastName;
     public $bloodGroup;
@@ -20,6 +20,7 @@ class User
     {
         $this->phoneNumbers = new ArrayCollection();
     }
+
     public function getId()
     {
         return $this->id;
@@ -53,6 +54,7 @@ class User
     {
         return $this->bloodGroup;
     }
+
     public function setBloodGroup(bloodgroup $bloodGroup): self
     {
         $this->bloodGroup = $bloodGroup;
@@ -71,53 +73,52 @@ class User
 
         return $this;
     }
+
     public function getPhoneNumbers(): Collection
     {
         return $this->phoneNumbers;
     }
-    
+
     public function addPhoneNumber(PhoneNumber $phoneNumber): self
     {
-        if(!$this->phoneNumbers->contains($phoneNumber))
-        {
+        if(!$this->phoneNumbers->contains($phoneNumber)){
             $this->phoneNumbers[] = $phoneNumber;
             $phoneNumber->setUser($this);
         }
+
         return $this;
     } 
+
     public function removePhoneNumber(PhoneNumber $phoneNumber): self
     {
-        if(!$this->phoneNumbers->contains($phoneNumber))
-        {
+        if(!$this->phoneNumbers->contains($phoneNumber)) {
             $this->phoneNumbers->removeElement($phoneNumber);
         }
-        if ($phoneNumber->getUser() === $this) 
-        {
+        if ($phoneNumber->getUser() === $this) {
             $phoneNumber->setUser(null);
         }
+
         return $this;
     }
+
     public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->created_at;
     }
- 
     public function setCreatedAt(?\DateTimeInterface $created_at): self
     {
         $this->created_at = $created_at;
- 
+
         return $this;
     }
- 
     public function getUpdatedAt(): ?\DateTimeInterface
     {
         return $this->updated_at;
     }
- 
     public function setUpdatedAt(?\DateTimeInterface $updated_at): self
     {
         $this->updated_at = $updated_at;
- 
+
         return $this;
     }
 }

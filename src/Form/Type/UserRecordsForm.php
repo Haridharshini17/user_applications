@@ -1,28 +1,28 @@
 <?php
+
 namespace App\Form\Type;
 
-use App\Entity\User;
-
-use App\Form\Type\PhoneNumberForm;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-use App\Form\Type\BloodGroupTransformer;
-use App\Form\Type\GenderTransformer;
+use App\Form\Transformer\BloodGroupTransformer;
+use App\Form\Transformer\GenderTransformer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use symfony\component\OptionsResolver\OptionsResolver;
-
+use App\Entity\User;
+use App\Form\Type\PhoneNumberForm;
 
 class UserRecordsForm extends AbstractType
 {
-    private $transformer;
-    private $transformer1;
+    private $bloodGroupTransformer;
+    private $genderTransformer;
+
     public function __construct(BloodGroupTransformer $bloodGroupTransformer, GenderTransformer $genderTransformer)
     {
-        $this->transformer = $bloodGroupTransformer;
-        $this->transformer1 = $genderTransformer;
+        $this->bloodGroupTransformer = $bloodGroupTransformer;
+        $this->genderTransformer = $genderTransformer;
     }
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -42,9 +42,9 @@ class UserRecordsForm extends AbstractType
         ->getForm()
         ->add('Save', SubmitType::class);
         $builder->get('bloodGroup')
-            ->addModelTransformer($this->transformer);
+            ->addModelTransformer($this->bloodGroupTransformer);
         $builder->get('gender')
-            ->addModelTransformer($this->transformer1);
+            ->addModelTransformer($this->genderTransformer);
     }
     public function setDefaultOptions(OptionsResolver $resolver): void
     {

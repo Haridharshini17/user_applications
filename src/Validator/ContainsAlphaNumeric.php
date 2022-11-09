@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Validator;
 
 use Symfony\Component\Validator\Attribute\HasNamedArguments;
@@ -15,7 +16,6 @@ class ContainsAlphaNumeric extends Constraint
     public function __construct(string $mode, array $groups = null, mixed $payload = null)
     {
         parent::__construct([], $groups, $payload);
-
         $this->mode = $mode;
     }
 }

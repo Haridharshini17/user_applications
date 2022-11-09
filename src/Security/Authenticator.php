@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Security;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -20,34 +21,38 @@ class Authenticator extends AbstractAuthenticator
     {
 	    $this->jwtEncoder = $event;
     }
+
     public function supports(Request $request): ?bool
     {
         return $request->headers->has('x-api-key');
 	}
+
     public function authenticate(Request $request): Passport
     {
         $apiToken = $request->headers->get('x-api-key');
-		if (null === $apiToken)
-		{
+		if (null === $apiToken) {
             throw new CustomUserMessageAuthenticationException('No API token provided');
         }
 		$data = $this->jwtEncoder->decode($apiToken);
-        if ($data === false) 
-        {
-            throw new CustomUserMessageAuthenticationException('Invalid Token');
+        if ($data === false) {
+           throw new CustomUserMessageAuthenticationException('Invalid Token');
         }
         $email = $data['email'];
+
 		return new SelfValidatingPassport(new UserBadge($email));
     }
+
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
         return null;
     }
+
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception): ?Response
     {
         $data = [
            'message' => strtr($exception->getMessageKey(), $exception->getMessageData())
         ];
+
         return new JsonResponse($data, Response::HTTP_UNAUTHORIZED);
     }
 }

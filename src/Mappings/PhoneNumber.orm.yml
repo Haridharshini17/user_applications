@@ -12,7 +12,7 @@ App\Entity\PhoneNumber:
     type: integer
     length: 50
  manyToOne:
-  users:
+  user:
     targetEntity: User
     inversedBy: phoneNumbers
     cascade: ["persist"]

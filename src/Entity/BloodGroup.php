@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Entity;
 
 class BloodGroup
@@ -27,6 +28,7 @@ class BloodGroup
     public function setBloodGroup($bloodGroup): self
     {
         $this->bloodGroup = $bloodGroup;
+
         return $this;
     }
 }

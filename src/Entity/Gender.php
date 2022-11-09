@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Entity;
 
 class Gender
@@ -24,6 +25,7 @@ class Gender
     public function setGender(string $gender): self
     {
         $this->gender = $gender;
+        
         return $this;
     }
 }
