@@ -29,8 +29,8 @@ class LoginForm extends AbstractType
                   ],
                 ]
             )
-       ->getForm()
-       ->add('Save', SubmitType::class);
+        ->getForm()
+        ->add('Save', SubmitType::class);
     }
     public function setDefaultOptions(OptionsResolver $resolver): void
     {

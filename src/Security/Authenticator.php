@@ -32,7 +32,8 @@ class Authenticator extends AbstractAuthenticator
             throw new CustomUserMessageAuthenticationException('No API token provided');
         }
 		$data = $this->jwtEncoder->decode($apiToken);
-        if ($data === false) {
+        if ($data === false) 
+        {
             throw new CustomUserMessageAuthenticationException('Invalid Token');
         }
         $email = $data['email'];
