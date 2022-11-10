@@ -8,8 +8,6 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\EntityManagerInterface;
-use App\Entity\User;
-use App\Entity\PhoneNumber;
 use App\Form\Type\UserRecordsForm;
 
 class BaseController extends AbstractController
@@ -18,6 +16,7 @@ class BaseController extends AbstractController
     public function welcome(): Response
     {
         $message = 'HI';
+        
         return new response($message);
     }
 
@@ -43,26 +42,22 @@ class BaseController extends AbstractController
         $entityManager->flush();
     }
 
-    public function insertData(Request $request)
+    public function insertData(Request $request, $user)
     {
-        $user = new User;
-        $phoneNumber = new PhoneNumber;
-        $phoneNumber = $user->addPhoneNumber($phoneNumber);
         $createForm = $this->createForm(UserRecordsForm::class, $user);
         $createForm->handleRequest($request);
         $createForm->submit(json_decode($request->getContent(), true));
+
         return $createForm;
     }
 
-    public function updateData(ManagerRegistry $doctrine, $id, Request $request)
+    public function updateData(Request $request, $data)
     {
-        $user = new User();
-        $entityManager = $doctrine->getManager();
-        $data = $entityManager->getRepository(User::class)->find($id);
         $createForm = $this->createForm(UserRecordsForm::class, $data);
         $createForm->handleRequest($request);
         $data = $createForm->getData();
         $createForm->submit(json_decode($request->getContent(), true));
+
         return $createForm;
     } 
 }

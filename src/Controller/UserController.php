@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Entity\PhoneNumber;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,35 +12,41 @@ use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\User;
 use App\Service\UserService;
 
-class UserController extends AbstractController
+#[Route('api/user/')]
+class UserController extends BaseController
 {
-    public function __construct(BaseController $baseController)
+    public function __construct(UserService $userService)
     {
-        $this->baseController = $baseController;
+        $this->userService = $userService;
     }
 
-   #[Route('user/add', name: 'add', methods: ['POST'])]
+   #[Route('add', name: 'add', methods: ['POST'])]
    public function insert(Request $request, ManagerRegistry $doctrine, EntityManagerInterface $entityManager): Response
-   { 
-        $createForm = $this->baseController->insertData($request,$doctrine,$entityManager);
+   {
+        $user = new User();
+        $phoneNumber = new PhoneNumber();
+        $phoneNumber = $user->addPhoneNumber($phoneNumber);
+        $createForm = $this->insertData($request, $user);
         if($createForm->isSubmitted() && $createForm->isValid()) {
-            $this->baseController->dataConnection($createForm,$doctrine,$entityManager);
-            $success=$this->baseController->successResponse();
+            $this->dataConnection($createForm ,$doctrine ,$entityManager);
+            $success = $this->successResponse();
+
             return new JsonResponse($success);
         }
-        $failure = $this->baseController->failureResponse();
+        $failure = $this->failureResponse();
+
         return new JsonResponse($failure);  
    }
 
-   #[Route('user/display/{id}', name: 'display', methods: ['GET'])]
+   #[Route('{id}', name: 'display', methods: ['GET'])]
    public function display(ManagerRegistry $doctrine, $id): Response
    {
-        $displayData = new UserService();
-        $datas= $displayData->displayData($doctrine, $id);
-        return new Response($this->json($datas));
+        $records = $this->userService->displayData($doctrine, $id);
+
+        return new Response($this->json($records));
    }
 
-   #[Route('user/delete/{id}', name: 'delete', methods: ['DELETE'])]
+   #[Route('delete/{id}', name: 'delete', methods: ['DELETE'])]
    public function delete(ManagerRegistry $doctrine, $id): Response
    {
         $deleteData = $doctrine->getManager();
@@ -48,23 +54,29 @@ class UserController extends AbstractController
         if($record) {
 		    $deleteData->remove($record);
             $deleteData->flush();
-            $success=$this->baseController->successResponse();
+            $success=$this->successResponse();
+
             return new JsonResponse($success);
         }
-        $failure = $this->baseController->failureResponse();
+        $failure = $this->failureResponse();
+
         return new JsonResponse($failure);
    }
 
-   #[Route('user/update/{id}', name: 'update', methods: ['PATCH'])]
+   #[Route('update/{id}', name: 'update', methods: ['PATCH'])]
    public function update(ManagerRegistry $doctrine ,$id, Request $request, EntityManagerInterface $entityManager): Response
    {
-        $createForm = $this->baseController->updateData($doctrine,$id,$request);
+        $entityManager = $doctrine->getManager();
+        $data = $entityManager->getRepository(User::class)->find($id);
+        $createForm = $this->updateData($request,$data);
         if($createForm->isSubmitted() && $createForm->isValid()) {
-            $this->baseController->dataConnection($createForm,$doctrine,$entityManager);
-            $success=$this->baseController->successResponse();
+            $this->dataConnection($createForm, $doctrine, $entityManager);
+            $success=$this->successResponse();
+
             return new JsonResponse($success);
         }
-        $failure = $this->baseController->failureResponse();
+        $failure = $this->failureResponse();
+
         return new JsonResponse($failure);  
     }
 }

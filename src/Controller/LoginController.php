@@ -24,15 +24,17 @@ class LoginController extends AbstractController
       $createForm->handleRequest($request);
       $createForm->submit(json_decode($request->getContent(), true));
       if($createForm->isSubmitted() && $createForm->isValid()) {
-			   $user = new Admin;
-            $email = $createForm["email"]->getData();
-            $password = $createForm["password"]->getData();
-            $users = $conn->fetchAllAssociative('SELECT *FROM Admin where email = "'.$email.'" AND password = "'.$password.'"');
-            return $users;
+			$user = new Admin;
+         $email = $createForm["email"]->getData();
+         $password = $createForm["password"]->getData();
+         $users = $conn->fetchAllAssociative('SELECT *FROM Admin where email = "'.$email.'" AND password = "'.$password.'"');
+
+         return $users;
       }
 	  $failure = [
 		'message' => ["Please provide valid details to proceed login"]
 	  ];
+     
       return new JsonResponse($failure,Response::HTTP_BAD_REQUEST);
    }
 }
